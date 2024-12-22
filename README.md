@@ -17,6 +17,18 @@ This is the backend API for an event platform that allows users to register, log
 - Bcrypt: Password hashing for secure user password storage.
 - Multer: Middleware for handling file uploads.
 
+## Prerequisites
+Ensure you have the following installed:
+- Node.js (v14 or higher)
+- MongoDB Atlas Account or local MongoDB setup
+- Environment Variables
+- The environment variables are set up in a .env file
+
+## Usage
+- Start the server in development mode with nodemon: npm run dev
+- Or start the server in production mode: npm start
+- Server will be deployed at http://localhost:3000
+
 ## API Endpoints
 ### User Endpoints
 - POST /api/v1/users/register: Register a new user.
