@@ -1,4 +1,4 @@
-# Event Platform Backend
+# RocktheCode_P10
 This is the backend API for an event platform that allows users to register, log in, create events, join events, and manage event details. The API supports JWT-based authentication, file uploads to Cloudinary, and uses MongoDB for data storage.
 
 ## Features
