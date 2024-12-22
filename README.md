@@ -30,3 +30,7 @@ This is the backend API for an event platform that allows users to register, log
 - POST /api/v1/events: Create a new event (requires authentication).
 - PUT /api/v1/events/:id: Update an event (requires authentication).
 - DELETE /api/v1/events/:id: Delete an event (requires authentication).
+
+## Notes
+- The API includes JWT-based authentication. When registering or logging in, you will receive a token that must be sent as a Bearer token in the Authorization header for protected routes.
+- For Cloudinary file uploads, only images in jpeg, png, or jpg formats are allowed.
