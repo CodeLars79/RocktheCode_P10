@@ -46,3 +46,8 @@ Ensure you have the following installed:
 ## Notes
 - The API includes JWT-based authentication. When registering or logging in, you will receive a token that must be sent as a Bearer token in the Authorization header for protected routes.
 - For Cloudinary file uploads, only images in jpeg, png, or jpg formats are allowed.
+
+## Credits ✨
+- Developed by: Lars Sørensen
+
+## ENJOY! 💙
