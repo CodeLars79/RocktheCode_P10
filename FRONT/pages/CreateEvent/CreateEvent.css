@@ -1,0 +1,56 @@
+#create-event-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 60px;
+  padding: var(--rtc-padding-m);
+}
+
+label {
+  font-weight: bold;
+}
+
+#title,
+#location,
+#description,
+#date,
+#time {
+  border-radius: 10px;
+  border: 2px solid var(--rtc-color-2);
+}
+
+#image {
+  border: none;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: var(--rtc-color-1);
+  border-radius: 10px;
+  border: none;
+}
+
+button {
+  background-color: var(--rtc-color-2);
+  font-size: large;
+  margin-top: 40px;
+  width: 50%;
+  color: var(--rtc-color-1);
+  padding: 10px 15px;
+  border: 2px solid var(--rtc-color-2);
+  border-radius: var(--rtc-primary-br);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--rtc-color-1);
+  color: var(--rtc-color-2);
+  border: 2px solid var(--rtc-color-2);
+  opacity: 100%;
+  cursor: pointer;
+}

@@ -1,0 +1,112 @@
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--rtc-color-1);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#home h1 {
+  color: var(--rtc-color-2);
+  font-size: 18vw;
+}
+
+#home h2 {
+  color: var(--rtc-color-3);
+  font-size: var(--rtc-font-l);
+  padding: 5%;
+}
+
+#home .hero-container img {
+  margin-top: 120px;
+  padding: var(--rtc-padding-s);
+  padding-top: var(--rtc-padding-l);
+  width: 150px;
+  height: auto;
+  animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* main-container styles */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 100px;
+  gap: 100px;
+  padding: 20px;
+  text-align: center;
+}
+
+.description {
+  text-align: left;
+}
+
+.description img {
+  width: 120px;
+  height: auto;
+  padding: var(--rtc-padding-xs);
+  margin-bottom: var(--rtc-margin-s);
+}
+
+.description h3 {
+  font-size: var(--rtc-font-l);
+  color: var(--rtc-color-2);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.description p {
+  font-size: var(--rtc-font-m);
+  color: var(--rtc-color-3);
+}
+
+#joinbtn {
+  background-color: var(--rtc-color-1);
+  font-size: large;
+  width: 50%;
+  color: var(--rtc-color-2);
+  padding: 10px 15px;
+  border: 2px solid var(--rtc-color-2);
+  border-radius: var(--rtc-primary-br);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#joinbtn:hover {
+  background-color: var(--rtc-color-2);
+  color: var(--rtc-color-1);
+  border: 2px solid var(--rtc-color-2);
+  opacity: 100%;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  #home h2 {
+    font-size: var(--rtc-font-m);
+  }
+}
