@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+  /* FONTS */
+  --rtc-primary-font: 'Inter', sans-serif;
+
+  /* FONT SIZES */
+  --rtc-font-xs: 12px;
+  --rtc-font-s: 16px;
+  --rtc-font-m: 24px;
+  --rtc-font-l: 40px;
+
+  /* BRANDING COLORS */
+  --rtc-color-1: #ebe9e1; /*background*/
+  --rtc-color-2: #e43d12; /*main text*/
+  --rtc-color-3: #838383; /*secundary text*/
+  --rtc-color-4: #219b9d;
+
+  /* BORDER RADIUS */
+  --rtc-primary-br: 20px;
+  --rtc-secondary-br: 10px;
+
+  /* SPACINGS */
+  --rtc-margin-xs: 10px;
+  --rtc-margin-s: 20px;
+  --rtc-margin-m: 30px;
+  --rtc-margin-l: 40px;
+  --rtc-margin-xl: 50px;
+  --rtc-margin-section: 100px;
+
+  --rtc-padding-xs: 10px;
+  --rtc-padding-s: 20px;
+  --rtc-padding-m: 30px;
+  --rtc-padding-l: 40px;
+  --rtc-padding-xl: 50px;
+
+  --rtc-gap-xs: 10px;
+  --rtc-gap-s: 20px;
+  --rtc-gap-m: 30px;
+  --rtc-gap-l: 40px;
+  --rtc-gap-xl: 50px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: var(--rtc-primary-font);
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--rtc-color-1);
+}
+
+a {
+  font-weight: 500;
+  color: var(--rtc-color-2);
+  text-decoration: inherit;
+}
+a:hover {
+  color: var(--rtc-color-2);
+}
