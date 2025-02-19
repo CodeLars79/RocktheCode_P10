@@ -31,13 +31,15 @@ export const CreateEvent = () => {
     e.preventDefault()
     const formData = new FormData(e.target)
 
+    const token = localStorage.getItem('token')
+    console.log('Token:', token)
+
     try {
-      const response = await apiFetch('/events', formData, {
+      await apiFetch('/events', {
         method: 'POST',
+        body: formData,
         headers: { Authorization: localStorage.getItem('token') }
       })
-
-      if (!response.ok) throw new Error(await response.text())
 
       alert('Event created successfully!')
       e.target.reset()

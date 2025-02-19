@@ -21,6 +21,9 @@ export const Events = () => {
       loader.style.display = 'block'
 
       const events = await apiFetch('/events')
+
+      events.sort((a, b) => new Date(a.date) - new Date(b.date))
+
       for (const event of events) {
         const card = createEventCard(event)
         eventsContainer.appendChild(card)
