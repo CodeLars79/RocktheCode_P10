@@ -25,7 +25,12 @@ const userSchema = new mongoose.Schema(
       default: 'user',
       enum: ['admin', 'user']
     },
-    events: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }]
+    favorites: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'events'
+      }
+    ]
   },
   {
     timestamps: true,

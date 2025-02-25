@@ -5,8 +5,7 @@ const {
   getEventById,
   postEvent,
   updateEvent,
-  deleteEvent,
-  addAttendeeToEvent
+  deleteEvent
 } = require('../controllers/event')
 
 const eventsRouter = require('express').Router()
@@ -16,6 +15,5 @@ eventsRouter.get('/:id', getEventById)
 eventsRouter.post('/', [isAuth], upload.single('image'), postEvent)
 eventsRouter.put('/:id', [isAuth], updateEvent)
 eventsRouter.delete('/:id', [isAuth], deleteEvent)
-eventsRouter.post('/add-attendee', [isAuth], addAttendeeToEvent)
 
 module.exports = eventsRouter

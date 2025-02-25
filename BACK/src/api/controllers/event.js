@@ -80,44 +80,10 @@ const deleteEvent = async (req, res, next) => {
   }
 }
 
-// Add an attendee to an event
-const addAttendeeToEvent = async (req, res, next) => {
-  try {
-    const { eventId, userId } = req.body
-
-    const event = await Event.findById(eventId)
-    if (!event) {
-      return res.status(404).json({ message: 'Event not found' })
-    }
-
-    if (event.attendees.includes(userId)) {
-      return res.status(400).json({ message: 'User is already an attendee' })
-    }
-
-    event.attendees.push(userId)
-    await event.save()
-
-    const user = await User.findById(userId)
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' })
-    }
-
-    if (!user.events.includes(eventId)) {
-      user.events.push(eventId)
-      await user.save()
-    }
-
-    return res.status(200).json({ message: 'User added to event', event })
-  } catch (error) {
-    return res.status(500).json({ message: 'Error adding attendee', error })
-  }
-}
-
 module.exports = {
   getEvents,
   getEventById,
   postEvent,
   updateEvent,
-  deleteEvent,
-  addAttendeeToEvent
+  deleteEvent
 }
