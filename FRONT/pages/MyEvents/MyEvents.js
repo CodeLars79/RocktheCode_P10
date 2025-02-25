@@ -22,22 +22,28 @@ export const MyEvents = async () => {
 
     try {
       const favoriteEventIds = JSON.parse(
-        localStorage.getItem('favoriteEvents') || '[]'
+        localStorage.getItem('favorites') || '[]'
       )
 
       if (favoriteEventIds.length === 0) {
-        myEventsContainer.innerHTML = '<p>No favorite events yet.</p>'
+        myEventsContainer.innerHTML =
+          '<p id="nofavorite-text">No favorite events yet...</p>'
+        loader.style.display = 'none'
         return
       }
 
       const allEvents = await apiFetch('/events')
       const favoriteEvents = allEvents.filter((event) =>
-        favoriteEventIds.includes(event.id)
+        favoriteEventIds.includes(event._id)
       )
 
-      for (const event of favoriteEvents) {
-        const card = createEventCard(event)
-        myEventsContainer.appendChild(card)
+      if (favoriteEvents.length === 0) {
+        myEventsContainer.innerHTML = '<p>No favorite events yet.</p>'
+      } else {
+        favoriteEvents.forEach((event) => {
+          const card = createEventCard(event)
+          myEventsContainer.appendChild(card)
+        })
       }
     } catch (error) {
       myEventsContainer.innerHTML = `<p class="error-message">Unable to load favorite events. Please try again later.</p>`
@@ -48,9 +54,9 @@ export const MyEvents = async () => {
 
   await loadFavoriteEvents()
 
-  window.addEventListener('storage', async (event) => {
-    if (event.key === 'favoriteEvents') {
-      await loadFavoriteEvents()
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'favorites') {
+      loadFavoriteEvents()
     }
   })
 

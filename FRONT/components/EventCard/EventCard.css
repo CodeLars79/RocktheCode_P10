@@ -67,10 +67,25 @@
 
 .event-content .favorite-btn.favorited {
   color: var(--rtc-color-2);
+
+  transform: scale(1.1);
+  animation: pulse 0.6s ease-in-out;
 }
 
 .event-content .favorite-btn:hover {
   transform: scale(1.2);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1.1);
+  }
 }
 
 /* Mobile styles */

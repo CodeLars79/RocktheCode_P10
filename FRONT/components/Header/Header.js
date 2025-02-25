@@ -6,10 +6,17 @@ const isLoggedIn = () => !!localStorage.getItem('user')
 
 const logout = () => {
   localStorage.removeItem('user')
+  localStorage.removeItem('token')
+  localStorage.removeItem('favorites')
   window.dispatchEvent(new Event('storage'))
 
-  const homeRoute = routes.find((route) => route.path === '/')
-  navigate(null, homeRoute || {})
+  console.clear()
+
+  const loginRoute = routes.find((route) => route.path === '/login')
+
+  if (loginRoute) {
+    navigate({ preventDefault: () => {} }, loginRoute)
+  }
 }
 
 export const Header = () => {

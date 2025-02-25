@@ -24,7 +24,7 @@ export const RegisterForm = (form) => {
   const registerButton = Button({
     text: 'SIGN UP',
     type: 'button',
-    onClick: () => handleRegister()
+    onClick: (e) => handleRegister(e)
   })
 
   const registerContainer = form.querySelector('.register-container')
@@ -51,23 +51,28 @@ export const RegisterForm = (form) => {
     return { name, email, password }
   }
 
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault()
+
     const registerData = validateInputs()
     if (!registerData) return
 
     try {
-      await apiFetch('/users/register', {
+      const response = await apiFetch('/users/register', {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         body: JSON.stringify(registerData)
       })
 
       alert('Registration successful! You can now log in.')
-      form.reset()
+      form.querySelectorAll('input').forEach((input) => (input.value = ''))
 
       const loginRoute = routes.find((route) => route.path === '/login')
+
       if (loginRoute) {
         navigate(new Event('click'), loginRoute)
+      } else {
+        console.error('Navigation error: loginRoute is invalid', loginRoute)
       }
     } catch (error) {
       console.error('Registration error:', error)
@@ -75,8 +80,5 @@ export const RegisterForm = (form) => {
     }
   }
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault()
-    handleRegister()
-  })
+  form.addEventListener('submit', handleRegister)
 }

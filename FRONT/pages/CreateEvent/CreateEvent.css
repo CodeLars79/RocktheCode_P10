@@ -54,3 +54,15 @@ button:hover {
   opacity: 100%;
   cursor: pointer;
 }
+
+.success {
+  color: var(--rtc-color-2);
+  font-size: var(--rtc-font-m);
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
+}

@@ -43,18 +43,23 @@ export const LoginForm = (form) => {
     if (!loginData) return
 
     try {
-      await apiFetch('/users/login', {
+      const response = await apiFetch('/users/login', {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         body: JSON.stringify(loginData)
       })
 
-      localStorage.setItem('user', JSON.stringify(loginData))
-      window.dispatchEvent(new Event('storage'))
+      if (!response.token) {
+        throw new Error('Token not received from server')
+      }
 
+      localStorage.setItem('user', JSON.stringify(loginData))
+      localStorage.setItem('token', response.token)
+
+      window.dispatchEvent(new Event('storage'))
       window.location.href = '/home'
     } catch (error) {
-      console.error(error)
+      console.error('Login error:', error)
       alert(`Login failed: ${error.message}`)
     }
   }

@@ -15,6 +15,11 @@
   padding: 50px;
   margin-top: 80px;
 }
+#nofavorite-text {
+  color: var(--rtc-color-3);
+  font-size: var(--rtc-font-m);
+  text-align: center;
+}
 
 .error-message {
   color: var(--rtc-color-2);
