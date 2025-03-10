@@ -19,11 +19,11 @@ const eventSchema = new mongoose.Schema(
       required: true
     },
     image: { type: String, required: true },
-    attendees: [
+    host: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: false
+        required: true
       }
     ]
   },

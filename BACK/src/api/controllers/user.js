@@ -37,6 +37,16 @@ const register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body
 
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: 'All fields are required' })
+    }
+
+    if (password.length < 6) {
+      return res
+        .status(400)
+        .json({ message: 'Password must be at least 6 characters long' })
+    }
+
     const userDuplicated = await User.findOne({ email })
 
     if (userDuplicated) {
@@ -53,9 +63,7 @@ const register = async (req, res, next) => {
     const user = await newUser.save()
     return res.status(201).json(user)
   } catch (error) {
-    return res
-      .status(400)
-      .json({ message: 'Error occurred during registration', error })
+    return res.status(400).json({ message: error.message })
   }
 }
 
@@ -114,10 +122,27 @@ const updateUser = async (req, res, next) => {
   }
 }
 
+//* Delete a user by ID
+const deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const deletedUser = await User.findByIdAndDelete(id)
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+    return res
+      .status(200)
+      .json({ message: 'User deleted successfully', deletedUser })
+  } catch (error) {
+    return res.status(400).json({ message: 'Error deleting user', error })
+  }
+}
+
 module.exports = {
   getUsers,
   getUserById,
   register,
   updateUser,
-  login
+  login,
+  deleteUser
 }

@@ -32,9 +32,27 @@ const postEvent = async (req, res, next) => {
       return res.status(400).json({ message: 'Image upload is required' })
     }
 
-    const eventData = { ...req.body, image: req.file.path }
-    const newEvent = new Event(eventData)
+    const { date, title, location, description } = req.body
+    const eventDate = new Date(date)
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
 
+    if (eventDate < today) {
+      return res
+        .status(400)
+        .json({ message: 'The event date cannot be in the past' })
+    }
+
+    const eventData = {
+      title,
+      date,
+      location,
+      description,
+      image: req.file.path,
+      host: req.user.id
+    }
+
+    const newEvent = new Event(eventData)
     const event = await newEvent.save()
     return res
       .status(201)
