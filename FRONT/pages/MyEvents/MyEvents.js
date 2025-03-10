@@ -28,7 +28,7 @@ export const MyEvents = async () => {
 
   const userId = localStorage.getItem('userId') // Get logged-in user's ID
 
-  // Load Hosted Events
+  
   const loadHostedEvents = async () => {
     hostedEventsContainer.innerHTML = ''
     hostedLoader.style.display = 'block'
@@ -55,7 +55,7 @@ export const MyEvents = async () => {
     }
   }
 
-  // Load Favorite Events
+  
   const loadFavoriteEvents = async () => {
     favoriteEventsContainer.innerHTML = ''
     favoriteLoader.style.display = 'block'
@@ -92,11 +92,11 @@ export const MyEvents = async () => {
     }
   }
 
-  // Load both sections
+  
   await loadHostedEvents()
   await loadFavoriteEvents()
 
-  // Update favorite events in real-time if changed
+  
   window.addEventListener('storage', (event) => {
     if (event.key === 'favorites') {
       loadFavoriteEvents()
