@@ -36,6 +36,7 @@ Ensure you have the following installed:
 - GET /api/v1/users: Get all users (admin only).
 - GET /api/v1/users/:id: Get a user by ID.
 - PUT /api/v1/users/:id: Update user details (requires authentication).
+- DELETE /api/v1/users/:id: Delete a user (requires authentication).
 ### Event Endpoints
 - GET /api/v1/events: Get all events.
 - GET /api/v1/events/:id: Get event details by ID.
