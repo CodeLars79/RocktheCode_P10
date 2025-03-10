@@ -26,9 +26,8 @@ export const MyEvents = async () => {
   const hostedLoader = div.querySelector('#hosted-loader')
   const favoriteLoader = div.querySelector('#favorite-loader')
 
-  const userId = localStorage.getItem('userId') // Get logged-in user's ID
+  const userId = localStorage.getItem('userId')
 
-  
   const loadHostedEvents = async () => {
     hostedEventsContainer.innerHTML = ''
     hostedLoader.style.display = 'block'
@@ -55,7 +54,6 @@ export const MyEvents = async () => {
     }
   }
 
-  
   const loadFavoriteEvents = async () => {
     favoriteEventsContainer.innerHTML = ''
     favoriteLoader.style.display = 'block'
@@ -92,11 +90,9 @@ export const MyEvents = async () => {
     }
   }
 
-  
   await loadHostedEvents()
   await loadFavoriteEvents()
 
-  
   window.addEventListener('storage', (event) => {
     if (event.key === 'favorites') {
       loadFavoriteEvents()
