@@ -1,0 +1,22 @@
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  max-width: 450px;
+  width: 100%;
+  margin: var(--rtc-margin-section) auto;
+}
+
+.profile-container h3 {
+  color: var(--rtc-color-2);
+  font-size: 40px;
+}
+
+.hand-icon {
+  width: 100px;
+  height: auto;
+  margin: 30px;
+}

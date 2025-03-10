@@ -5,6 +5,7 @@ import { Home } from '../../pages/Home/Home'
 import { Login } from '../../pages/Login/Login'
 import { Register } from '../../pages/Register/Register'
 import { About } from '../../pages/About/About'
+import { Profile } from '../../pages/Profile/Profile'
 
 export const routes = [
   {
@@ -37,5 +38,10 @@ export const routes = [
     path: '/login',
     text: 'LOGIN',
     page: Login
+  },
+  {
+    path: '/profile',
+    text: 'PROFILE',
+    page: Profile
   }
 ]

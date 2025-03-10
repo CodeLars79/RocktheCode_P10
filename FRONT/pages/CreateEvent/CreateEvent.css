@@ -1,3 +1,25 @@
+#createEventTitle {
+  text-align: center;
+  margin-top: 130px;
+  font-size: var(--rtc-font-l);
+  font-size: 60px;
+  color: var(--rtc-color-2);
+}
+
+#createEventText {
+  text-align: center;
+  font-size: var(--rtc-font-m);
+  color: var(--rtc-color-3);
+  margin-top: 20px;
+}
+
+.arrow-icon {
+  width: 80px;
+  height: auto;
+  margin: 30px auto 0 auto;
+  display: block;
+}
+
 #create-event-form {
   display: flex;
   justify-content: center;
@@ -5,7 +27,6 @@
   gap: 1rem;
   max-width: 500px;
   margin: 0 auto;
-  margin-top: 60px;
   padding: var(--rtc-padding-m);
 }
 

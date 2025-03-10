@@ -2,22 +2,7 @@ import { navigate } from '../../utils/functions/navigate'
 import { routes } from '../../utils/routes/routes'
 import './Header.css'
 
-const isLoggedIn = () => !!localStorage.getItem('user')
-
-const logout = () => {
-  localStorage.removeItem('user')
-  localStorage.removeItem('token')
-  localStorage.removeItem('favorites')
-  window.dispatchEvent(new Event('storage'))
-
-  console.clear()
-
-  const loginRoute = routes.find((route) => route.path === '/login')
-
-  if (loginRoute) {
-    navigate({ preventDefault: () => {} }, loginRoute)
-  }
-}
+const isLoggedIn = () => !!localStorage.getItem('token')
 
 export const Header = () => {
   const header = document.createElement('header')
@@ -34,15 +19,14 @@ export const Header = () => {
   const renderLinks = () => {
     navMenu.innerHTML = ''
 
-    console.log('Rendering nav links - User logged in:', isLoggedIn())
-
     const filteredRoutes = isLoggedIn()
-      ? routes.filter((route) => !['/register', '/login'].includes(route.path))
+      ? routes.filter(
+          (route) => !['/register', '/login', '/profile'].includes(route.path)
+        ) // Exclude profile
       : routes.filter(
-          (route) => !['/create-event', '/my-events'].includes(route.path)
+          (route) =>
+            !['/create-event', '/my-events', '/profile'].includes(route.path)
         )
-
-    console.log('Filtered Routes:', filteredRoutes)
 
     filteredRoutes.forEach((route, index) => {
       const li = document.createElement('li')
@@ -55,10 +39,23 @@ export const Header = () => {
     })
 
     if (isLoggedIn()) {
-      const logoutLi = document.createElement('li')
-      logoutLi.innerHTML = '<button class="logout-button">LOG OUT</button>'
-      logoutLi.querySelector('button').addEventListener('click', logout)
-      navMenu.appendChild(logoutLi)
+      // Ensure Profile is added only once
+      if (!navMenu.querySelector('.profile-button')) {
+        const profileLi = document.createElement('li')
+        profileLi.innerHTML = `
+          <a href="/profile" class="profile-button">
+            <img src="assets/profile.png" alt="Profile" class="profile-icon">
+          </a>
+        `
+        profileLi.querySelector('a').addEventListener('click', (e) => {
+          navigate(
+            e,
+            routes.find((route) => route.path === '/profile')
+          )
+          closeMenu()
+        })
+        navMenu.appendChild(profileLi)
+      }
     }
   }
 
@@ -73,6 +70,7 @@ export const Header = () => {
   }
 
   burgerButton.addEventListener('click', toggleMenu)
+
   window.addEventListener('storage', renderLinks)
 
   let lastScrollY = window.scrollY

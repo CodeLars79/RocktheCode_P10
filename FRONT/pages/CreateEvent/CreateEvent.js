@@ -5,6 +5,9 @@ import './CreateEvent.css'
 export const CreateEvent = () => {
   const div = createPage('create-event')
   div.innerHTML = `
+    <h2 id="createEventTitle">GOT AN IDEA FOR A SWAP?</h2>
+    <p id="createEventText">Fill out the form below to create a new event.</p>
+    <img src="assets/arrow.png" alt="arrow" class="arrow-icon">
     <form id="create-event-form" enctype="multipart/form-data">
       <div id="error-section"></div>
       <div id="success-message" class="hidden"></div> 
@@ -34,13 +37,20 @@ export const CreateEvent = () => {
     const errorSection = div.querySelector('#error-section')
     const successMessage = div.querySelector('#success-message')
 
+    const eventDate = new Date(formData.get('date'))
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+
+    if (eventDate < today) {
+      errorSection.textContent = 'The event date cannot be in the past.'
+      return
+    }
+
     const token = localStorage.getItem('token')
     if (!token) {
       errorSection.textContent = 'You must be logged in to create an event.'
       return
     }
-
-    console.log('Token being sent:', token)
 
     try {
       await apiFetch('/events', {

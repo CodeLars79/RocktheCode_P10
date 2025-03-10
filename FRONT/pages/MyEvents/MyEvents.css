@@ -1,24 +1,48 @@
-#my-events-container {
+#my-hosted-events,
+#my-favorite-events {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 50px;
-  justify-content: space-around;
-  margin-top: 50px;
+  gap: 30px;
+  justify-content: center;
+  width: 100%;
 }
 
-#my-eventstitle {
+#hosted-events-container,
+#favorite-events-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  #hosted-events-container,
+  #favorite-events-container {
+    flex-direction: column;
+  }
+}
+
+.my-eventstitle {
   display: flex;
   justify-content: center;
   color: var(--rtc-color-2);
-  font-size: 60px;
-  padding: 50px;
-  margin-top: 80px;
+  font-size: 50px;
+  padding: 40px;
+  margin-top: 60px;
+  text-align: center;
 }
-#nofavorite-text {
+
+#nofavorite-text,
+#nohosted-text {
   color: var(--rtc-color-3);
   font-size: var(--rtc-font-m);
   text-align: center;
+  margin-top: 20px;
 }
 
 .error-message {
@@ -43,6 +67,7 @@
   mask-composite: subtract;
   animation: l3 1s infinite linear;
 }
+
 @keyframes l3 {
   to {
     transform: rotate(1turn);

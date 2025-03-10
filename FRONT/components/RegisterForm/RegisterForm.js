@@ -43,6 +43,11 @@ export const RegisterForm = (form) => {
       return false
     }
 
+    if (password.length < 6) {
+      alert('Password must be at least 6 characters long.')
+      return false
+    }
+
     if (password !== passwordRepeat) {
       alert('Passwords do not match.')
       return false

@@ -20,6 +20,13 @@
   padding: var(--rtc-padding-s);
 }
 
+.host-icon {
+  width: 30px; /* Adjust size */
+  height: 30px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
 .event-content {
   flex: 2;
   padding: var(--rtc-padding-s);

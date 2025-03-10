@@ -10,10 +10,16 @@
 #eventstitle {
   display: flex;
   justify-content: center;
+  text-align: center;
   color: var(--rtc-color-2);
   font-size: 60px;
-  padding: 50px;
-  margin-top: 80px;
+  margin-top: 130px;
+}
+
+#eventsText {
+  text-align: center;
+  font-size: var(--rtc-font-m);
+  color: var(--rtc-color-3);
 }
 
 .error-message {

@@ -53,8 +53,8 @@ export const LoginForm = (form) => {
         throw new Error('Token not received from server')
       }
 
-      localStorage.setItem('user', JSON.stringify(loginData))
       localStorage.setItem('token', response.token)
+      localStorage.setItem('userId', response.user._id)
 
       window.dispatchEvent(new Event('storage'))
       window.location.href = '/home'

@@ -124,24 +124,11 @@ nav {
   opacity: 100%;
 }
 
-.logout-button {
-  all: unset;
-  background-color: var(--rtc-color-2);
-  color: var(--rtc-color-1);
-  padding: 10px 15px;
-  border: 2px solid var(--rtc-color-2);
-  border-radius: var(--rtc-primary-br);
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  opacity: 100%;
-}
-
-.logout-button:hover {
-  background-color: var(--rtc-color-1);
-  color: var(--rtc-color-2);
-  border: 2px solid var(--rtc-color-2);
-  opacity: 100%;
+.profile-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  vertical-align: middle;
 }
 
 /* Responsive styling for mobile */

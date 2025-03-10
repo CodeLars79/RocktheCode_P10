@@ -8,6 +8,8 @@ export const Events = () => {
   div.innerHTML = `
     <section id="events">
       <h3 id="eventstitle">UPCOMING EVENTS</h3>
+      <p id="eventsText">Check out the upcoming events and save your favorites... Happy swapping!</p>
+      <img src="assets/arrow.png" alt="arrow" class="arrow-icon">
       <div class="loader" style="display: none;"></div>
       <ul id="eventscontainer"></ul>
     </section>
@@ -22,9 +24,15 @@ export const Events = () => {
 
       const events = await apiFetch('/events')
 
-      events.sort((a, b) => new Date(a.date) - new Date(b.date))
+      const today = new Date()
 
-      for (const event of events) {
+      const upcomingEvents = events.filter(
+        (event) => new Date(event.date) > today
+      )
+
+      upcomingEvents.sort((a, b) => new Date(a.date) - new Date(b.date))
+
+      for (const event of upcomingEvents) {
         const card = createEventCard(event)
         eventsContainer.appendChild(card)
       }
