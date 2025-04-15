@@ -5,7 +5,21 @@ const User = require('../models/user')
 const getEvents = async (req, res, next) => {
   try {
     const events = await Event.find()
-    return res.status(200).json(events)
+
+    let userFavorites = []
+
+    if (req.user) {
+      const user = await User.findById(req.user.id)
+
+      userFavorites = user.favorites.map((fav) => fav.toString())
+    }
+
+    const eventsWithFavoriteFlag = events.map((event) => ({
+      ...event.toObject(),
+      isFavorited: userFavorites.includes(event._id.toString())
+    }))
+
+    return res.status(200).json(eventsWithFavoriteFlag)
   } catch (error) {
     return res.status(400).json({ message: 'Error fetching events', error })
   }
@@ -98,10 +112,55 @@ const deleteEvent = async (req, res, next) => {
   }
 }
 
+// Get events created by logged-in user
+const getMyEvents = async (req, res, next) => {
+  try {
+    const myEvents = await Event.find({ host: req.user.id })
+    res.status(200).json(myEvents)
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching your events', error })
+  }
+}
+
+// Get favorite events of logged-in user
+const getFavoriteEvents = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id).populate('favorites')
+    res.status(200).json(user.favorites)
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching favorite events', error })
+  }
+}
+
+// Toggle favorite
+const toggleFavorite = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id)
+    const eventId = req.params.id
+
+    const isFavorited = user.favorites.includes(eventId)
+
+    if (isFavorited) {
+      user.favorites = user.favorites.filter((id) => id.toString() !== eventId)
+    } else {
+      user.favorites.push(eventId)
+    }
+
+    await user.save()
+
+    res.status(200).json({ favorited: !isFavorited })
+  } catch (error) {
+    res.status(500).json({ message: 'Error toggling favorite', error })
+  }
+}
+
 module.exports = {
   getEvents,
   getEventById,
   postEvent,
   updateEvent,
-  deleteEvent
+  deleteEvent,
+  getMyEvents,
+  getFavoriteEvents,
+  toggleFavorite
 }
