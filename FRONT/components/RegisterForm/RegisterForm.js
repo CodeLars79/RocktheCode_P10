@@ -3,6 +3,7 @@ import { apiFetch } from '../../utils/functions/apiFetch'
 import { Button } from '../../components/Button/Button'
 import { navigate } from '../../utils/functions/navigate'
 import { routes } from '../../utils/routes/routes'
+import { CustomAlert } from '../../components/CustomAlert/CustomAlert'
 
 export const RegisterForm = (form) => {
   form.className = 'register-form'
@@ -39,17 +40,29 @@ export const RegisterForm = (form) => {
     const passwordRepeat = form.querySelector('#password-repeat').value
 
     if (!name || !email || !password || !passwordRepeat) {
-      alert('All fields are required.')
+      CustomAlert({
+        message: 'All fields are required.',
+        onConfirm: () => {},
+        onCancel: () => {}
+      })
       return false
     }
 
     if (password.length < 6) {
-      alert('Password must be at least 6 characters long.')
+      CustomAlert({
+        message: 'Password must be at least 6 characters long.',
+        onConfirm: () => {},
+        onCancel: () => {}
+      })
       return false
     }
 
     if (password !== passwordRepeat) {
-      alert('Passwords do not match.')
+      CustomAlert({
+        message: 'Passwords do not match.',
+        onConfirm: () => {},
+        onCancel: () => {}
+      })
       return false
     }
 
@@ -69,19 +82,26 @@ export const RegisterForm = (form) => {
         body: JSON.stringify(registerData)
       })
 
-      alert('Registration successful! You can now log in.')
-      form.querySelectorAll('input').forEach((input) => (input.value = ''))
-
-      const loginRoute = routes.find((route) => route.path === '/login')
-
-      if (loginRoute) {
-        navigate(new Event('click'), loginRoute)
-      } else {
-        console.error('Navigation error: loginRoute is invalid', loginRoute)
-      }
+      CustomAlert({
+        message: 'Registration successful! You can now log in.',
+        onConfirm: () => {
+          form.querySelectorAll('input').forEach((input) => (input.value = ''))
+          const loginRoute = routes.find((route) => route.path === '/login')
+          if (loginRoute) {
+            navigate(new Event('click'), loginRoute)
+          } else {
+            console.error('Navigation error: loginRoute is invalid', loginRoute)
+          }
+        },
+        onCancel: () => {}
+      })
     } catch (error) {
       console.error('Registration error:', error)
-      alert(`Registration failed: ${error.message}`)
+      CustomAlert({
+        message: `Registration failed: ${error.message}`,
+        onConfirm: () => {},
+        onCancel: () => {}
+      })
     }
   }
 

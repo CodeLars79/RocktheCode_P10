@@ -1,24 +1,31 @@
 import './LoginForm.css'
 import { apiFetch } from '../../utils/functions/apiFetch'
 import { Button } from '../../components/Button/Button'
+import { CustomAlert } from '../../components/CustomAlert/CustomAlert'
 
-export const LoginForm = (form) => {
+export const LoginForm = () => {
+  const form = document.createElement('form')
   form.className = 'login-form'
+  form.setAttribute('autocomplete', 'on')
 
   form.innerHTML = `
     <div class="login-container">
       <h1>LOGIN</h1>
       <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="Enter Email" name="email" id="email" required>
+      <input type="text" placeholder="Enter Email" name="email" id="email" required autocomplete="email">
+      
       <label for="password"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="password" id="password" required>
+      <input type="password" placeholder="Enter Password" name="password" id="password" required autocomplete="current-password">
     </div>
   `
 
   const loginButton = Button({
     text: 'LOGIN',
-    type: 'button',
-    onClick: () => handleLogin()
+    type: 'submit',
+    onClick: (e) => {
+      e.preventDefault()
+      handleLogin()
+    }
   })
 
   const loginContainer = form.querySelector('.login-container')
@@ -31,7 +38,11 @@ export const LoginForm = (form) => {
     const password = form.querySelector('#password').value
 
     if (!email || !password) {
-      alert('Please fill in both email and password.')
+      CustomAlert({
+        message: 'Please fill in both email and password.',
+        onConfirm: () => {},
+        onCancel: () => {}
+      })
       return false
     }
 
@@ -60,7 +71,11 @@ export const LoginForm = (form) => {
       window.location.href = '/home'
     } catch (error) {
       console.error('Login error:', error)
-      alert(`Login failed: ${error.message}`)
+      CustomAlert({
+        message: `Login failed: ${error.message}`,
+        onConfirm: () => {},
+        onCancel: () => {}
+      })
     }
   }
 
@@ -68,4 +83,6 @@ export const LoginForm = (form) => {
     e.preventDefault()
     handleLogin()
   })
+
+  return form
 }

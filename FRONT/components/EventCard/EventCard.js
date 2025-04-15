@@ -1,5 +1,6 @@
 import './EventCard.css'
 import { apiFetch } from '../../utils/functions/apiFetch'
+import { CustomAlert } from '../../components/CustomAlert/CustomAlert'
 
 export const createEventCard = (event) => {
   const card = document.createElement('div')
@@ -27,14 +28,14 @@ export const createEventCard = (event) => {
   `
 
   const actionsContainer = card.querySelector('.event-actions')
-
   const favoriteBtn = document.createElement('button')
   favoriteBtn.classList.add('favorite-btn')
   favoriteBtn.setAttribute('data-event-id', event._id)
-  updateFavoriteState(favoriteBtn, isFavorited(event._id))
 
-  favoriteBtn.addEventListener('click', () => {
-    toggleFavorite(event._id, favoriteBtn)
+  updateFavoriteState(favoriteBtn, event.isFavorited)
+
+  favoriteBtn.addEventListener('click', async () => {
+    await toggleFavorite(event._id, favoriteBtn)
   })
 
   actionsContainer.appendChild(favoriteBtn)
@@ -42,7 +43,7 @@ export const createEventCard = (event) => {
   if (event.host.includes(userId)) {
     const hostText = document.createElement('p')
     hostText.classList.add('host-label')
-    hostText.innerHTML = `
+    hostText.innerHTML = ` 
       <img src="./assets/profile.png" alt="Host" class="host-icon"> HOST
     `
     const deleteBtn = document.createElement('button')
@@ -50,50 +51,28 @@ export const createEventCard = (event) => {
     deleteBtn.classList.add('delete-btn')
 
     deleteBtn.addEventListener('click', async () => {
-      if (confirm('Are you sure you want to delete this event?')) {
-        try {
-          await deleteEvent(event._id)
-
-          let favorites = getFavorites()
-          if (favorites.includes(event._id)) {
-            favorites = favorites.filter((id) => id !== event._id)
-            localStorage.setItem('favorites', JSON.stringify(favorites))
+      CustomAlert({
+        message: 'Are you sure you want to delete this event?',
+        onConfirm: async () => {
+          try {
+            await deleteEvent(event._id)
+            card.remove()
+          } catch (error) {
+            console.error('Failed to delete event:', error)
+            CustomAlert({
+              message: 'Failed to delete event. Please try again.',
+              onConfirm: () => {}
+            })
           }
-
-          card.remove()
-        } catch (error) {
-          console.error('Failed to delete event:', error)
-          alert('Failed to delete event. Please try again.')
-        }
-      }
+        },
+        onCancel: () => {}
+      })
     })
     actionsContainer.appendChild(hostText)
     actionsContainer.appendChild(deleteBtn)
   }
 
   return card
-}
-
-const getFavorites = () => JSON.parse(localStorage.getItem('favorites')) || []
-const isFavorited = (eventId) => getFavorites().includes(eventId)
-
-const toggleFavorite = (eventId, button) => {
-  const token = localStorage.getItem('token')
-  if (!token) {
-    alert('You must be logged in to favorite an event!')
-    return
-  }
-
-  let favorites = getFavorites()
-
-  if (favorites.includes(eventId)) {
-    favorites = favorites.filter((id) => id !== eventId)
-  } else {
-    favorites.push(eventId)
-  }
-
-  localStorage.setItem('favorites', JSON.stringify(favorites))
-  updateFavoriteState(button, isFavorited(eventId))
 }
 
 const updateFavoriteState = (button, favorited) => {
@@ -110,10 +89,43 @@ const updateFavoriteState = (button, favorited) => {
   }
 }
 
+const toggleFavorite = async (eventId, button) => {
+  const token = localStorage.getItem('token')
+  if (!token) {
+    CustomAlert({
+      message: 'You must be logged in to favorite an event!',
+      onConfirm: () => {}
+    })
+    return
+  }
+
+  try {
+    const response = await apiFetch(`/events/${eventId}/favorite`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    if (response.error) throw new Error(response.error)
+
+    updateFavoriteState(button, response.favorited)
+  } catch (error) {
+    console.error('Favorite toggle failed:', error)
+    CustomAlert({
+      message: 'Could not update favorite status.',
+      onConfirm: () => {}
+    })
+  }
+}
+
 const deleteEvent = async (eventId) => {
   const token = localStorage.getItem('token')
   if (!token) {
-    alert('You must be logged in to delete an event!')
+    CustomAlert({
+      message: 'You must be logged in to delete an event!',
+      onConfirm: () => {}
+    })
     return
   }
 
@@ -127,8 +139,8 @@ const deleteEvent = async (eventId) => {
       throw new Error(response.error)
     }
 
-    alert('Event deleted successfully')
+    CustomAlert({ message: 'Event deleted successfully', onConfirm: () => {} })
   } catch (error) {
-    alert(`Error: ${error.message}`)
+    CustomAlert({ message: `Error: ${error.message}`, onConfirm: () => {} })
   }
 }

@@ -4,8 +4,9 @@ import { LoginForm } from '../../components/LoginForm/LoginForm'
 
 export const Login = () => {
   const div = createPage('login')
-  const form = document.createElement('form')
-  LoginForm(form)
+
+  const form = LoginForm()
   div.appendChild(form)
+
   return div
 }

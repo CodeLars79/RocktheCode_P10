@@ -1,0 +1,37 @@
+.arrow-icon {
+  width: 80px;
+  height: auto;
+  cursor: pointer;
+  position: absolute;
+  bottom: 20px;
+  left: 48%;
+  transform: translateX(-50%);
+  animation: bounce 1.5s infinite;
+  z-index: 1;
+}
+
+.arrow-icon:hover {
+  opacity: 0.8;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+@media (max-width: 600px) {
+  .arrow-icon {
+    width: 60px;
+    bottom: 15px;
+    left: 42%;
+  }
+}

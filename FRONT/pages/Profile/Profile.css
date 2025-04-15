@@ -3,11 +3,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
   padding: 20px;
   max-width: 450px;
   width: 100%;
-  margin: var(--rtc-margin-section) auto;
+  height: 100vh;
+  margin: auto;
 }
 
 .profile-container h3 {
@@ -19,4 +19,19 @@
   width: 100px;
   height: auto;
   margin: 30px;
+}
+
+@media screen and (max-width: 768px) {
+  .profile-container {
+    padding: 10px;
+  }
+
+  .profile-container h3 {
+    font-size: 30px;
+  }
+
+  .hand-icon {
+    width: 80px;
+    margin: 20px;
+  }
 }
