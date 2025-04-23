@@ -40,7 +40,10 @@ Ensure you have the following installed:
 ### Event Endpoints
 - GET /api/v1/events: Get all events.
 - GET /api/v1/events/:id: Get event details by ID.
+- GET /api/v1/events/mine: Get my hosted events (requires authentication).
+- GET /api/v1/events/favorites: Get my favorited events (requires authentication).
 - POST /api/v1/events: Create a new event (requires authentication).
+- POST /api/v1/events/:id/favorite: Toggle or favorite events (requires authentication).
 - PUT /api/v1/events/:id: Update an event (requires authentication).
 - DELETE /api/v1/events/:id: Delete an event (requires authentication).
 
