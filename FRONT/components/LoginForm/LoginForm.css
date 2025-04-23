@@ -12,6 +12,7 @@
   padding: var(--rtc-padding-l);
   text-align: center;
   animation: fadeIn 0.3s ease-in-out;
+  position: relative;
 }
 
 .login-container h1 {

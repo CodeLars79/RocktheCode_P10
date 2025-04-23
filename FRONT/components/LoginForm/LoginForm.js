@@ -2,18 +2,19 @@ import './LoginForm.css'
 import { apiFetch } from '../../utils/functions/apiFetch'
 import { Button } from '../../components/Button/Button'
 import { CustomAlert } from '../../components/CustomAlert/CustomAlert'
+import { Loader } from '../../components/Loader/Loader'
 
 export const LoginForm = () => {
   const form = document.createElement('form')
   form.className = 'login-form'
   form.setAttribute('autocomplete', 'on')
+  const loader = Loader()
 
   form.innerHTML = `
     <div class="login-container">
       <h1>LOGIN</h1>
       <label for="email"><b>Email</b></label>
       <input type="text" placeholder="Enter Email" name="email" id="email" required autocomplete="email">
-      
       <label for="password"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="password" id="password" required autocomplete="current-password">
     </div>
@@ -53,6 +54,8 @@ export const LoginForm = () => {
     const loginData = validateInputs()
     if (!loginData) return
 
+    form.appendChild(loader)
+
     try {
       const response = await apiFetch('/users/login', {
         headers: { 'Content-Type': 'application/json' },
@@ -76,6 +79,8 @@ export const LoginForm = () => {
         onConfirm: () => {},
         onCancel: () => {}
       })
+    } finally {
+      loader.remove()
     }
   }
 

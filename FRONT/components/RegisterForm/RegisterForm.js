@@ -4,9 +4,11 @@ import { Button } from '../../components/Button/Button'
 import { navigate } from '../../utils/functions/navigate'
 import { routes } from '../../utils/routes/routes'
 import { CustomAlert } from '../../components/CustomAlert/CustomAlert'
+import { Loader } from '../../components/Loader/Loader'
 
 export const RegisterForm = (form) => {
   form.className = 'register-form'
+  const loader = Loader()
 
   form.innerHTML = `
     <div class="register-container">
@@ -75,6 +77,9 @@ export const RegisterForm = (form) => {
     const registerData = validateInputs()
     if (!registerData) return
 
+    // Show loader
+    form.appendChild(loader)
+
     try {
       const response = await apiFetch('/users/register', {
         headers: { 'Content-Type': 'application/json' },
@@ -102,8 +107,12 @@ export const RegisterForm = (form) => {
         onConfirm: () => {},
         onCancel: () => {}
       })
+    } finally {
+      loader.remove()
     }
   }
 
   form.addEventListener('submit', handleRegister)
+
+  return form
 }

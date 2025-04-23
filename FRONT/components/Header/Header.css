@@ -26,6 +26,7 @@ header ul li {
 
 header.hidden {
   transform: translateY(-100%);
+  pointer-events: none;
 }
 
 nav {
@@ -59,18 +60,19 @@ nav {
   flex-direction: column;
   gap: 5px;
   list-style: none;
-  margin: 0;
-  padding: 50px;
+  margin-top: 0px;
+  padding: 10px;
   position: absolute;
   top: 0;
   left: 0;
   background: var(--rtc-color-1);
   width: 100%;
-  height: 100vh;
+  height: 50vh;
 }
 
 .nav-menu.active {
   display: flex;
+  pointer-events: auto;
 }
 
 .nav-menu li {
