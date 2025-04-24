@@ -126,13 +126,24 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params
+    const userId = req.user._id.toString()
+
+    //* aqui se verifica si el ID en la url es el mismo que el ID del token
+    if (id !== userId) {
+      return res
+        .status(403)
+        .json({ message: 'You are not authorized to delete this account' })
+    }
+
     const deletedUser = await User.findByIdAndDelete(id)
     if (!deletedUser) {
       return res.status(404).json({ message: 'User not found' })
     }
-    return res
-      .status(200)
-      .json({ message: 'User deleted successfully', deletedUser })
+
+    return res.status(200).json({
+      message: 'User deleted successfully',
+      deletedUser
+    })
   } catch (error) {
     return res.status(400).json({ message: 'Error deleting user', error })
   }

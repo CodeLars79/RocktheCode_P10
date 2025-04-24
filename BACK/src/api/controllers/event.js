@@ -100,13 +100,26 @@ const updateEvent = async (req, res, next) => {
 const deleteEvent = async (req, res, next) => {
   try {
     const { id } = req.params
-    const deletedEvent = await Event.findByIdAndDelete(id)
-    if (!deletedEvent) {
+    const userId = req.user._id.toString()
+
+    const event = await Event.findById(id)
+    if (!event) {
       return res.status(404).json({ message: 'Event not found' })
     }
-    return res
-      .status(200)
-      .json({ message: 'Event deleted successfully', deletedEvent })
+
+    //* Aqui se verifica si el usuario es el host del evento
+    const isHost = event.host.some((hostId) => hostId.toString() === userId)
+    if (!isHost) {
+      return res
+        .status(403)
+        .json({ message: 'You are not authorized to delete this event' })
+    }
+
+    const deletedEvent = await Event.findByIdAndDelete(id)
+    return res.status(200).json({
+      message: 'Event deleted successfully',
+      deletedEvent
+    })
   } catch (error) {
     return res.status(400).json({ message: 'Error deleting event', error })
   }
